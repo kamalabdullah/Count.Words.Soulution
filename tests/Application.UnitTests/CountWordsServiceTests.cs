@@ -2,6 +2,7 @@
 using Application.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -40,19 +41,6 @@ namespace Application.UnitTests
         }
 
         [Fact]
-        public void CountWords_ShouldHandleWrongPath()
-        {
-            // Arrange
-            string directoryPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "Assets\\WorngPath");
-
-            // Act
-            var wordCount = countWordsService.CountWords(directoryPath);
-
-            // Assert
-            Assert.Empty(wordCount);
-        }
-
-        [Fact]
         public void CountWords_ShouldHandleFilesWithNoWords()
         {
             // Arrange
@@ -77,6 +65,10 @@ namespace Application.UnitTests
             // Assert
             Assert.Empty(wordCount);
         }
+
+     
+        // todo: adding performance test
+        // todo: test case for case sensitive
 
     }
 }

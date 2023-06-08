@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Assets\Empty Folder\" />
+    <Folder Include="Assets\Performance\" />
   </ItemGroup>
 
 </Project>
