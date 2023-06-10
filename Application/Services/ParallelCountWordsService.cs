@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 
 namespace Application.Services
 {
-    public class CountWordsService : ICountWordsService
+    public class ParallelCountWordsService: ICountWordsService
     {
+
         private string _dirPath;
-        public CountWordsService(string dirPath)
+        public ParallelCountWordsService(string dirPath)
         {
             _dirPath = dirPath;
         }
@@ -20,9 +21,8 @@ namespace Application.Services
         {
             string[] files = Directory.GetFiles(_dirPath, "*.txt");
 
-            Dictionary<string, int> wordCount = new Dictionary<string, int>();
-
-            foreach (string file in files)
+            ConcurrentDictionary<string, int> wordCount = new ConcurrentDictionary<string, int>();
+            Parallel.ForEach(files, file =>
             {
                 Debug.WriteLine(Thread.CurrentThread.ManagedThreadId);
                 using (StreamReader reader = new StreamReader(file))
@@ -36,16 +36,13 @@ namespace Application.Services
                         {
                             if (!string.IsNullOrWhiteSpace(word))
                             {
-                                if (wordCount.ContainsKey(word))
-                                    wordCount[word]++;
-                                else
-                                    wordCount[word] = 1;
+                                wordCount.AddOrUpdate(word, 1, (_, count) => count + 1);
                             }
                         }
                     }
                 }
+            });
 
-            }
             return wordCount;
         }
     }

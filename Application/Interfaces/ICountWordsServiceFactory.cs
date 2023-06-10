@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    public interface ICountWordsService
+    public interface ICountWordsServiceFactory
     {
-        IDictionary<string,int> CountWords();
+        ICountWordsService GetCountWordsService(string dirPath, AppSettings settings);
     }
 }

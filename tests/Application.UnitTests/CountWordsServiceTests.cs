@@ -13,19 +13,16 @@ namespace Application.UnitTests
     public class CountWordsServiceTests
     {
         private ICountWordsService countWordsService;
-        public CountWordsServiceTests()
-        {
-             countWordsService = new CountWordsService();
-        }
 
         [Fact]
         public void CountWords_ShouldReturnCorrectWordCount()
         {
             // Arrange
             string directoryPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "Assets\\Correct Folder");
-           
+            countWordsService = new CountWordsService(directoryPath);
+
             // Act
-            var wordCount = countWordsService.CountWords(directoryPath);
+            var wordCount = countWordsService.CountWords();
 
             // Assert
             Assert.Equal(1, wordCount["Go"]);
@@ -45,9 +42,10 @@ namespace Application.UnitTests
         {
             // Arrange
             string directoryPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "Assets\\Empty File");
+            countWordsService = new CountWordsService(directoryPath);
 
             // Act
-            var wordCount = countWordsService.CountWords(directoryPath);
+            var wordCount = countWordsService.CountWords();
 
             // Assert
             Assert.Empty(wordCount);
@@ -58,17 +56,14 @@ namespace Application.UnitTests
         {
             // Arrange
             string directoryPath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName, "Assets\\Empty Folder");
+            countWordsService = new CountWordsService(directoryPath);
 
             // Act
-            var wordCount = countWordsService.CountWords(directoryPath);
+            var wordCount = countWordsService.CountWords();
 
             // Assert
             Assert.Empty(wordCount);
         }
-
-     
-        // todo: adding performance test
-        // todo: test case for case sensitive
 
     }
 }
